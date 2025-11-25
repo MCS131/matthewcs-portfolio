@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Christie Susanto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0d1117;
+            --light-navy: #161b22;
+            --lightest-navy: #21262d;
+            --slate: #8b949e;
+            --light-slate: #c9d1d9;
+            --lightest-slate: #f0f6fc;
+            --white: #ffffff;
+            --green: #58a6ff;
+            --green-tint: rgba(88, 166, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, system-ui, sans-serif;
+            background-color: var(--navy);
+            color: var(--slate);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background-color: var(--green-tint);
+            color: var(--green);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+        }
+
+        .logo {
+            color: var(--green);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--lightest-slate);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 150px;
+        }
+
+        @media (min-width: 1920px) {
+            .container {
+                padding: 0 calc((100vw - 1600px) / 2 + 150px);
+            }
+        }
+
+        /* Side Elements */
+        .side-elements {
+            position: fixed;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .social-links {
+            left: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: auto;
+        }
+
+        .social-links::after {
+            content: '';
+            width: 1px;
+            height: 90px;
+            background-color: var(--light-slate);
+        }
+
+        .social-links a {
+            color: var(--light-slate);
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .social-links a:hover {
+            color: var(--green);
+            transform: translateY(-3px);
+        }
+
+        .email-link {
+            right: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .email-link::after {
+            content: '';
+            width: 1px;
+            height: 90px;
+            background-color: var(--light-slate);
+        }
+
+        .email-link span {
+            writing-mode: vertical-rl;
+            color: var(--light-slate);
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 100px;
+            max-width: 1000px;
+        }
+
+        .hero-greeting {
+            color: var(--green);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .hero-title {
+            color: var(--lightest-slate);
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            color: var(--slate);
+            font-size: clamp(30px, 6vw, 60px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            max-width: 540px;
+            color: var(--slate);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 50px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            color: var(--green);
+            border: 1px solid var(--green);
+            border-radius: 4px;
+            padding: 18px 28px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .cta-button:hover {
+            background-color: var(--green-tint);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            max-width: 1000px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            color: var(--lightest-slate);
+            font-size: clamp(26px, 5vw, 32px);
+            font-weight: 600;
+        }
+
+        .section-title::before {
+            content: '0' counter(section) '.';
+            counter-increment: section;
+            color: var(--green);
+            margin-right: 15px;
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: 400;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--lightest-navy);
+            margin-left: 30px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 50px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        .skills-list li {
+            color: var(--slate);
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skills-list li::before {
+            content: '▹';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+        }
+
+        .profile-pic {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .profile-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--green);
+            mix-blend-mode: screen;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .profile-wrapper:hover::before {
+            opacity: 0;
+        }
+
+        .profile-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--green);
+            border-radius: 4px;
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .profile-wrapper:hover::after {
+            top: 15px;
+            left: 15px;
+        }
+
+        .profile-wrapper img {
+            width: 100%;
+            border-radius: 4px;
+            display: block;
+        }
+
+        /* Projects Section */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project:nth-of-type(2n) .project-content {
+            grid-column: 7 / -1;
+            text-align: right;
+        }
+
+        .project:nth-of-type(2n) .project-image {
+            grid-column: 1 / 8;
+        }
+
+        .project-content {
+            position: relative;
+            grid-column: 1 / 7;
+            z-index: 2;
+        }
+
+        .project-overline {
+            color: var(--green);
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .project-title {
+            color: var(--lightest-slate);
+            font-size: clamp(24px, 5vw, 28px);
+            margin-bottom: 20px;
+        }
+
+        .project-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .project-title a:hover {
+            color: var(--green);
+        }
+
+        .project-description {
+            background-color: var(--light-navy);
+            padding: 25px;
+            border-radius: 4px;
+            color: var(--light-slate);
+            font-size: 0.95rem;
+            box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .project:nth-of-type(2n) .project-description {
+            text-align: left;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .project:nth-of-type(2n) .project-tech {
+            justify-content: flex-end;
+        }
+
+        .project-tech li {
+            color: var(--light-slate);
+            font-size: 0.85rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .project:nth-of-type(2n) .project-links {
+            justify-content: flex-end;
+        }
+
+        .project-links a {
+            color: var(--lightest-slate);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-links a:hover {
+            color: var(--green);
+        }
+
+        .project-links a::before {
+            content: '→';
+            font-size: 1.2rem;
+        }
+
+        .project-image {
+            position: relative;
+            grid-column: 6 / -1;
+            z-index: 1;
+        }
+
+        .project-image a {
+            display: block;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .project-image a::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--navy);
+            mix-blend-mode: screen;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+
+        .project-image a:hover::before {
+            opacity: 0;
+        }
+
+        .project-image img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        /* Experience & Certifications */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .experience-content h3 {
+            color: var(--lightest-slate);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .experience-content h3 span {
+            color: var(--green);
+        }
+
+        .experience-content p {
+            color: var(--slate);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .cert-list {
+            list-style: none;
+        }
+
+        .cert-list li {
+            color: var(--slate);
+            margin-bottom: 20px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .cert-list li::before {
+            content: '▹';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .cert-name {
+            color: var(--lightest-slate);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* Contact Section */
+        .contact {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-overline {
+            color: var(--green);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-title {
+            color: var(--lightest-slate);
+            font-size: clamp(40px, 5vw, 60px);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .contact-text {
+            color: var(--slate);
+            margin-bottom: 50px;
+            line-height: 1.7;
+        }
+
+        .contact-email {
+            color: var(--slate);
+            font-size: 1.1rem;
+        }
+
+        /* Counter Reset */
+        body {
+            counter-reset: section;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1080px) {
+            .container {
+                padding: 0 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 25px;
+            }
+
+            .container {
+                padding: 0 25px;
+            }
+
+            .side-elements {
+                display: none;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .project {
+                display: block;
+            }
+
+            .project-content {
+                grid-column: 1 / -1;
+                text-align: left !important;
+            }
+
+            .project-image {
+                grid-column: 1 / -1;
+                opacity: 0.25;
+            }
+
+            .project-description {
+                background-color: transparent;
+                padding: 20px 0;
+                box-shadow: none;
+            }
+
+            .project-tech,
+            .project-links {
+                justify-content: flex-start !important;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">MCS</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Side Elements -->
+    <div class="side-elements social-links">
+        <a href="https://github.com/MCS131" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/matthew-christie-susanto-8644b51b9/" target="_blank">LinkedIn</a>
+        <a href="https://www.instagram.com/matthewcs._/" target="_blank">Instagram</a>
+    </div>
+
+    <div class="side-elements email-link">
+        <span>matthewchristie.susanto@gmail.com</span>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <p class="hero-greeting">Hi, my name is</p>
+            <h1 class="hero-title">Matthew Christie Susanto.</h1>
+            <h2 class="hero-subtitle">Software Engineering Student.</h2>
+            <p class="hero-description">
+                I'm a software engineering student passionate about creating digital solutions. 
+                Currently studying at <span style="color: var(--green)">Yamaguchi University</span>, 
+                focusing on building functional and user-friendly applications.
+            </p>
+            <a href="#projects" class="cta-button">Check out my projects!</a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Hello! I'm Matthew, a MEXT Scholar and software engineering student based in Yamaguchi, Japan.
+                        I enjoy creating things that live on the internet, whether that be websites, applications, or anything in between.
+                    </p>
+                    <p>
+                        My interest in software development started back in 2020 when I decided to learn Japanese and pursue 
+                        my studies in Japan. Fast-forward to today, and I've had the privilege of working on various projects 
+                        ranging from task management systems to comprehensive sales management solutions.
+                    </p>
+                    <p>
+                        I recently graduated with honors from Osaka Information Computer Vocational School with a GPA of 3.69/4.00, 
+                        and I'm now continuing my journey at Yamaguchi University pursuing Intelligent Information Engineering.
+                    </p>
+                    <p>Here are a few technologies I've been working with recently:</p>
+                    <ul class="skills-list">
+                        <li>Java & JavaFX</li>
+                        <li>C# & .NET</li>
+                        <li>Python</li>
+                        <li>JavaScript</li>
+                        <li>SQL & SQLite</li>
+                        <li>Entity Framework</li>
+                    </ul>
+                </div>
+                <div class="profile-pic">
+                    <div class="profile-wrapper">
+                        <img src="Portfolio_ProfilePict.jpeg" alt="Profile" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2 class="section-title">Some Things I've Built</h2>
+            <div class="projects-list">
+                <!-- Project 1: Task Management -->
+                <div class="project">
+                    <div class="project-content">
+                        <p class="project-overline">Project #1</p>
+                        <h3 class="project-title">
+                            <a href="https://github.com/MCS131/TaskManagement" target="_blank">
+                                Task Management System
+                            </a>
+                        </h3>
+                        <div class="project-description">
+                            A desktop task management application built with JavaFX and SQLite. Features include CRUD operations, 
+                            real-time search and filtering, task statistics, and priority-based organization. Implements MVC 
+                            architecture with DAO pattern for clean separation of concerns.
+                        </div>
+                        <ul class="project-tech">
+                            <li>JavaFX</li>
+                            <li>SQLite</li>
+                            <li>Maven</li>
+                            <li>MVC</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/MCS131/TaskManagement" target="_blank">View Repository</a>
+                        </div>
+                    </div>
+                    <div class="project-image">
+                        <a href="https://github.com/MCS131/TaskManagement" target="_blank">
+                            <img src="docs/screenshots/table.png" alt="Task Manager" 
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'%3E%3Crect fill=\'%23112240\' width=\'600\' height=\'400\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' fill=\'%2364ffda\' font-size=\'24\' font-family=\'monospace\'%3ETask Manager%3C/text%3E%3C/svg%3E'">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Sales Management -->
+                <div class="project">
+                    <div class="project-content">
+                        <p class="project-overline">Project #2</p>
+                        <h3 class="project-title">
+                            <a href="https://github.com/MCS131/SalesManagement" target="_blank">
+                                Sales Management System
+                            </a>
+                        </h3>
+                        <div class="project-description">
+                            A comprehensive sales management system developed in a team of 6. Handles customer management, 
+                            product inventory, order processing, and sales tracking. Built with C# WinForms and Entity Framework 
+                            Core using Code First approach for database management.
+                        </div>
+                        <ul class="project-tech">
+                            <li>C#</li>
+                            <li>WinForms</li>
+                            <li>Entity Framework</li>
+                            <li>SQL Server</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/MCS131/SalesManagement" target="_blank">View Repository</a>
+                        </div>
+                    </div>
+                    <div class="project-image">
+                        <a href="https://github.com/MCS131/SalesManagement" target="_blank">
+                            <img src="docs/screenshots/menu.png" alt="Sales Manager"
+                                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'%3E%3Crect fill=\'%23112240\' width=\'600\' height=\'400\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' fill=\'%2364ffda\' font-size=\'24\' font-family=\'monospace\'%3ESales Manager%3C/text%3E%3C/svg%3E'">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Certifications Section -->
+        <section id="experience">
+            <h2 class="section-title">Experience & Achievements</h2>
+            <div class="experience-grid">
+                <div class="experience-content">
+                    <h3>Co-Founder <span>@Solace MEXT Training</span></h3>
+                    <p>Jan 2022 - Apr 2024 Self-employed</p>
+                    <ul class="skills-list">
+                        <li>Built specialized training program for MEXT Scholarship applicants</li>
+                        <li>Managed project planning and account management</li>
+                        <li>Successfully guided students through competitive application process</li>
+                    </ul>
+                </div>
+
+                <div class="certifications-content">
+                    <h3 style="color: var(--lightest-slate); margin-bottom: 20px; font-size: 1.1rem;">Certifications</h3>
+                    <ul class="cert-list">
+                        <li>
+                            <span class="cert-name">MEXT Scholarship</span>
+                            Embassy Recommendation
+                        </li>
+                        <li>
+                            <span class="cert-name">JLPT N1</span>
+                            Score: 118/180
+                        </li>
+                        <li>
+                            <span class="cert-name">TOEIC L&R</span>
+                            Score: 965/990
+                        </li>
+                        <li>
+                            <span class="cert-name">IELTS</span>
+                            Score: 7.0/9.0 (C1)
+                        </li>
+                        <li>
+                            <span class="cert-name">Information Processing Diploma</span>
+                            GPA: 3.69/4.00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="contact">
+                <p class="contact-overline">04. What's Next?</p>
+                <h2 class="contact-title">Get In Touch</h2>
+                <p class="contact-text">
+                    I'm currently looking for new opportunities in software development. Whether you have a question 
+                    or just want to say hi, feel free to reach out!
+                </p>
+                <p class="contact-email">
+                    matthewchristie.susanto@gmail.com
