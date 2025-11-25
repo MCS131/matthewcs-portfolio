@@ -23,8 +23,9 @@
 
 ```
 portfolio/
-├── index.html                    # メインHTMLファイル
-├── Portfolio_ProfilePict.jpeg    # プロフィール画像
+├── portfolio.html                   　# メインHTMLファイル
+├── docs/
+│   └── screenshots/             　 # 画面のスクリーンショット
 └── README.md                     # 本ファイル
 ```
 
